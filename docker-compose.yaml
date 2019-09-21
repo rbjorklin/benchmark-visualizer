@@ -1,0 +1,31 @@
+# vim: set softtabstop=2 tabstop=2 shiftwidth=2 expandtab autoindent smartindent syntax=yaml:
+
+version: '3.7'
+services:
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_DB: "benchmarks"
+      POSTGRES_USER: "grafana"
+      POSTGRES_PASSWORD: "grafana"
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+  grafana:
+    image: grafana/grafana:6.4.0-beta1
+    environment:
+      GF_SERVER_ROOT_URL: "http://grafana.server.name"
+      GF_SECURITY_ADMIN_PASSWORD: "admin"
+    links:
+      - postgres
+    ports:
+      - "3000:3000"
+  parser:
+    build: .
+    volumes:
+      - type: bind
+        source: ./
+        target: /mnt
+    links:
+      - postgres
