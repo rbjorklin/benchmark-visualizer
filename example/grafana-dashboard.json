@@ -72,7 +72,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.throughput\nFROM (\n    SELECT id, path, throughput\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  throughput\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -239,7 +239,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.successful\nFROM (\n    SELECT id, path, successful\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  successful\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -414,7 +414,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.failed\nFROM (\n    SELECT id, path, failed\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  failed\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -554,7 +554,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.min\nFROM (\n    SELECT id, path, min\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  min\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -686,7 +686,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.mean\nFROM (\n    SELECT id, path, mean\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  mean\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -818,7 +818,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.max\nFROM (\n    SELECT id, path, max\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  max\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -950,7 +950,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.q25\nFROM (\n    SELECT id, path, q25\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  q25\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -1082,7 +1082,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.median\nFROM (\n    SELECT id, path, median\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  median\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -1214,7 +1214,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.std_dev\nFROM (\n    SELECT id, path, std_dev\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  std_dev\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -1347,7 +1347,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.q75\nFROM (\n    SELECT id, path, q75\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  q75\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -1479,7 +1479,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.q90\nFROM (\n    SELECT id, path, q90\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  q90\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -1611,7 +1611,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.q95\nFROM (\n    SELECT id, path, q95\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  q95\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -1743,7 +1743,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.q99\nFROM (\n    SELECT id, path, q99\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  q99\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -1875,7 +1875,7 @@
           ],
           "metricColumn": "path",
           "rawQuery": true,
-          "rawSql": "SELECT\n  outerq.timestamp AS \"time\",\n  outerq.commit AS metric,\n  subq.q999\nFROM (\n    SELECT id, path, q999\n    FROM example\n    WHERE path = '$endpoint'\n    GROUP BY id, path\n) subq JOIN example outerq on outerq.id = subq.id\nORDER BY outerq.timestamp ASC;",
+          "rawSql": "SELECT\n  timestamp AS \"time\",\n  commit AS \"metric\",\n  q999\nFROM $application\nWHERE path = '$endpoint'\nORDER BY timestamp ASC;",
           "refId": "A",
           "select": [
             [
@@ -2032,6 +2032,5 @@
   },
   "timezone": "",
   "title": "Performance over time",
-  "uid": "wjtYLttWz",
   "version": 4
 }
