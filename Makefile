@@ -3,6 +3,7 @@
 DB_USER ?= grafana
 DB_PASSWORD ?= grafana
 COMMIT ?= example
+APPLICATION ?= example
 RESULT ?= /mnt/results.csv
 JMETER ?= apache-jmeter-5.1.1.tgz
 
@@ -16,7 +17,7 @@ down:
 	docker-compose down
 
 parse:
-	docker-compose run parser --file $(RESULT) --user $(DB_USER) --password $(DB_PASSWORD) --commit $(COMMIT)
+	docker-compose run parser --file $(RESULT) --user $(DB_USER) --password $(DB_PASSWORD) --commit $(COMMIT) --application $(APPLICATION)
 
 install-jmeter:
 	curl -LOC - http://apache.mirror.rafal.ca//jmeter/binaries/$(JMETER)

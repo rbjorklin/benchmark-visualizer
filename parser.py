@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/local/bin/python3
 # vim: set softtabstop=4 tabstop=4 shiftwidth=4 expandtab autoindent smartindent syntax=python:
 
 import pandas
@@ -24,6 +24,13 @@ class RequestStatistics:
         self.successful = int(successful)
         self.failed = int(failed)
 
+class HistStat:
+    def __init__(self, path, timestamp, count, label, milliseconds):
+        self.path = path
+        self.timestamp = int(timestamp)
+        self.count = int(count)
+        self.label = label
+        self.milliseconds = int(milliseconds)
 
 def main():
     parser = argparse.ArgumentParser()
@@ -72,18 +79,25 @@ def main():
             '--commit',
             type=str,
             help='Commit hash to tag results with')
+    parser.add_argument(
+            '-b',
+            '--bins',
+            type=int,
+            default="10",
+            help='The number of bins to split values into')
     args = parser.parse_args()
 
-    results = pandas.read_csv(args.file,
+    df = pandas.read_csv(args.file,
             usecols=['timeStamp', 'elapsed', 'label', 'bytes', 'sentBytes', 'success'])
 
-    first_timestamp = int(results.timeStamp[0])
-    last_timestamp = int(results.timeStamp[results.timeStamp.last_valid_index()])
+    first_timestamp = int(df.timeStamp[0])
+    last_timestamp = int(df.timeStamp[df.timeStamp.last_valid_index()])
 
-    labels = results.label.unique()
+    labels = df.label.unique()
 
-    results_by_label = results.groupby('label')
+    results_by_label = df.groupby('label')
     request_path_statistics = []
+    request_path_hist = []
 
     for label in labels:
         request_path_statistics.append(RequestStatistics(
@@ -105,9 +119,27 @@ def main():
             results_by_label.success.get_group(label).value_counts().get(False, 0)
             ))
 
+        label_series = results_by_label.elapsed.get_group(label)
+        label_bins = pandas.cut(label_series.values, bins=args.bins, precision=0)
+        for key, count in label_bins.value_counts().to_dict().items():
+            request_path_hist.append(HistStat(
+                label,
+                first_timestamp / 1000,
+                count,
+                str(int(key.right)) + 'ms',
+                int(key.right)
+                ))
+
     conn = psycopg2.connect(host=args.host, port=args.port,
             dbname=args.database, user=args.user, password=args.password)
     cur = conn.cursor()
+
+    # heatmap table
+    #cur.execute("CREATE TABLE IF NOT EXISTS {} (id SERIAL PRIMARY KEY, commit VARCHAR(40), timestamp BIGINT,\
+    #        bucket INTEGER, label INTEGER, path TEXT);".format(args.application + '_heat'))
+
+    cur.execute("CREATE TABLE IF NOT EXISTS {} (id SERIAL PRIMARY KEY, commit VARCHAR(40), timestamp BIGINT,\
+            count INTEGER, milliseconds INTEGER, label TEXT, path TEXT);".format(args.application + '_hist'))
 
     cur.execute("CREATE TABLE IF NOT EXISTS {} (id SERIAL PRIMARY KEY, commit VARCHAR(40), timestamp BIGINT,\
             successful INTEGER, failed INTEGER, min INTEGER, median INTEGER, max INTEGER,\
@@ -119,9 +151,14 @@ def main():
         cur.execute("INSERT INTO {} (commit, timestamp, successful, failed, min, median, max,\
         mean, q25, q75, q90, q95, q99, q999, std_dev, throughput,\
             path) VALUES\
-            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)".format(args.application),
+            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);".format(args.application),
             (args.commit, r.timestamp, r.successful, r.failed, r.min, r.median, r.max, r.mean, r.q25, r.q75,
             r.q90, r.q95, r.q99, r.q999, r.std, r.throughput, r.path))
+
+    for r in request_path_hist:
+        cur.execute("INSERT INTO {} (commit, timestamp, count, milliseconds, label, path) VALUES\
+            (%s, %s, %s, %s, %s, %s);".format(args.application + '_hist'),
+            (args.commit, r.timestamp, r.count, r.milliseconds, r.label, r.path))
 
     conn.commit()
     cur.close()
