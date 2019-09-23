@@ -20,5 +20,6 @@ Quickstart
 * Upload example/grafana-dashboard.json
 
 .. image:: example/dashboard.png
+.. image:: example/histogram.png
 
 .. _dropwizard-example: https://github.com/dropwizard/dropwizard/tree/master/dropwizard-example
