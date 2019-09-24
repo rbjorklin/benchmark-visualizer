@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1569105008745,
+  "id": 2,
+  "iteration": 1569289807051,
   "links": [],
   "panels": [
     {
@@ -24,6 +24,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -191,6 +192,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -366,6 +368,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -506,6 +509,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -638,6 +642,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -770,6 +775,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -902,6 +908,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -1034,6 +1041,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -1166,6 +1174,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -1299,6 +1308,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -1431,6 +1441,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -1563,6 +1574,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -1695,6 +1707,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -1827,6 +1840,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 9,
       "gridPos": {
@@ -1975,8 +1989,8 @@
         "name": "application",
         "options": [],
         "query": "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';",
-        "refresh": 1,
-        "regex": "",
+        "refresh": 2,
+        "regex": "/^(?!.*_hist).*$/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -2000,7 +2014,7 @@
         "name": "endpoint",
         "options": [],
         "query": "SELECT path FROM $application;",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
@@ -2032,5 +2046,5 @@
   },
   "timezone": "",
   "title": "Performance over time",
-  "version": 4
+  "version": 2
 }

@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 7,
-  "iteration": 1569210329738,
+  "id": 1,
+  "iteration": 1569288407965,
   "links": [],
   "panels": [
     {
@@ -24,6 +24,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
@@ -63,7 +64,7 @@
           "group": [],
           "metricColumn": "label",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  \"timestamp\" AS \"time\",\r\n  label AS metric,\r\n  count\r\nFROM $application\r\nWHERE\r\n  path = '$path' AND commit = '$commit1'\r\nORDER BY milliseconds ASC",
+          "rawSql": "SELECT\r\n  \"timestamp\" AS \"time\",\r\n  label AS metric,\r\n  count\r\nFROM ${application}_hist\r\nWHERE\r\n  path = '$endpoint' AND commit = '$commit1'\r\nORDER BY milliseconds ASC",
           "refId": "A",
           "select": [
             [
@@ -132,10 +133,136 @@
       }
     },
     {
+      "columns": [],
+      "datasource": "PostgreSQL",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 10,
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 0,
+          "pattern": "/throughput/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "reqps"
+        },
+        {
+          "alias": "",
+          "colorMode": "value",
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "/successful/",
+          "thresholds": [
+            "1",
+            "1"
+          ],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": "value",
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "/failed/",
+          "thresholds": [
+            "0",
+            "0"
+          ],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "ms"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "label",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  commit,\r\n  throughput,\r\n  min,\r\n  mean,\r\n  q25,\r\n  median,\r\n  q75,\r\n  q90,\r\n  q95,\r\n  q99,\r\n  q999,\r\n  max,\r\n  std_dev,\r\n  successful,\r\n  failed\r\nFROM $application\r\nWHERE path = '$endpoint' AND commit = '$commit1';",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "bucket"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "example_hist",
+          "timeColumn": "\"timestamp\"",
+          "timeColumnType": "int8",
+          "where": [
+            {
+              "name": "$__unixEpochFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Requests per ms bucket: $commit1",
+      "transform": "table",
+      "transparent": true,
+      "type": "table"
+    },
+    {
       "aliasColors": {},
       "bars": true,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "PostgreSQL",
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
@@ -175,7 +302,7 @@
           "group": [],
           "metricColumn": "label",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  \"timestamp\" AS \"time\",\r\n  label AS metric,\r\n  count\r\nFROM $application\r\nWHERE\r\n  path = '$path' AND commit = '$commit2'\r\nORDER BY milliseconds ASC",
+          "rawSql": "SELECT\r\n  \"timestamp\" AS \"time\",\r\n  label AS metric,\r\n  count\r\nFROM ${application}_hist\r\nWHERE\r\n  path = '$endpoint' AND commit = '$commit2'\r\nORDER BY milliseconds ASC",
           "refId": "A",
           "select": [
             [
@@ -242,6 +369,131 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "columns": [],
+      "datasource": "PostgreSQL",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 11,
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 0,
+          "pattern": "/throughput/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "reqps"
+        },
+        {
+          "alias": "",
+          "colorMode": "value",
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "/successful/",
+          "thresholds": [
+            "1",
+            "1"
+          ],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": "value",
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "/failed/",
+          "thresholds": [
+            "0",
+            "0"
+          ],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "ms"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "label",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  commit,\r\n  throughput,\r\n  min,\r\n  mean,\r\n  q25,\r\n  median,\r\n  q75,\r\n  q90,\r\n  q95,\r\n  q99,\r\n  q999,\r\n  max,\r\n  std_dev,\r\n  successful,\r\n  failed\r\nFROM $application\r\nWHERE path = '$endpoint' AND commit = '$commit2';",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "bucket"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "example_hist",
+          "timeColumn": "\"timestamp\"",
+          "timeColumnType": "int8",
+          "where": [
+            {
+              "name": "$__unixEpochFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Requests per ms bucket: $commit1",
+      "transform": "table",
+      "transparent": true,
+      "type": "table"
     }
   ],
   "refresh": false,
@@ -253,8 +505,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "github2_hist",
-          "value": "github2_hist"
+          "text": "example",
+          "value": "example"
         },
         "datasource": "PostgreSQL",
         "definition": "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';",
@@ -266,7 +518,7 @@
         "options": [],
         "query": "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';",
         "refresh": 2,
-        "regex": "/.*_hist/",
+        "regex": "/^(?!.*_hist).*$/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -278,6 +530,7 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
           "text": "/hello-world",
           "value": "/hello-world"
         },
@@ -287,7 +540,7 @@
         "includeAll": false,
         "label": null,
         "multi": false,
-        "name": "path",
+        "name": "endpoint",
         "options": [],
         "query": "SELECT DISTINCT path FROM $application;",
         "refresh": 2,
@@ -303,8 +556,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "326add76",
-          "value": "326add76"
+          "text": "4e4e9d894",
+          "value": "4e4e9d894"
         },
         "datasource": "PostgreSQL",
         "definition": "SELECT DISTINCT commit from $application;",
@@ -373,5 +626,5 @@
   },
   "timezone": "",
   "title": "Request Count Histogram",
-  "version": 5
+  "version": 3
 }

@@ -14,6 +14,16 @@ services:
       - 5432
   grafana:
     image: grafana/grafana:6.4.0-beta1
+    volumes:
+      - type: bind
+        source: ./example/postgres.yaml
+        target: /etc/grafana/provisioning/datasources/postgres.yaml
+      - type: bind
+        source: ./example/dashboards.yaml
+        target: /etc/grafana/provisioning/dashboards/dashboards.yaml
+      - type: bind
+        source: ./example/
+        target: /var/lib/grafana/dashboards
     environment:
       GF_SERVER_ROOT_URL: "http://grafana.server.name"
       GF_SECURITY_ADMIN_PASSWORD: "admin"
